@@ -1,0 +1,50 @@
+server:
+  port: 8765
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+      - id: onboard
+        uri: lb://onboard-service
+        predicates:
+        - Path=/api/v1/onboard/**
+
+    loadbalancer:
+      ribbon:
+        enabled: false
+  kafka:
+    #bootstrap-servers: http://${HOST_IP}:9092
+    bootstrap-servers: http://localhost:9092
+  sleuth:
+    messaging:
+      kafka:
+        enabled: true
+    sampler:
+      probability: 1.0
+  zipkin:
+    kafka:
+      topic: blunt-gateway
+    sender:
+      type: kafka
+  boot:
+    admin:
+      client:
+        # url: http://${HOST_IP}:9000
+        url: http://localhost:9000
+        instance:
+          health-url: http://host.docker.internal:8765/actuator/health
+          management-url: http://host.docker.internal:8765/actuator
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+logging:
+  file:
+    path: C:/Users/kpaulpa/Documents/workArea/TechnicalWork/logs/blunt-gateway-service
