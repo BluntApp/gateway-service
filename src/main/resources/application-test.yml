@@ -17,13 +17,17 @@ spring:
         uri: lb://follow-service
         predicates:
         - Path=/api/v1/follow/**
+      - id: sms
+        uri: lb://sms-service
+        predicates:
+        - Path=/api/v1/sms/**
 
     loadbalancer:
       ribbon:
         enabled: false
   kafka:
     #bootstrap-servers: http://${HOST_IP}:9092
-    bootstrap-servers: http://localhost:9092
+    bootstrap-servers: http://host.docker.internal:9092
   sleuth:
     messaging:
       kafka:
@@ -39,7 +43,7 @@ spring:
     admin:
       client:
         # url: http://${HOST_IP}:9000
-        url: http://localhost:9000
+        url: http://host.docker.internal:9000
         instance:
           health-url: http://host.docker.internal:8765/actuator/health
           management-url: http://host.docker.internal:8765/actuator

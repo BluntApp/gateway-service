@@ -3,19 +3,20 @@ spring:
     name: gateway-service
   cloud:
     config:
-      discovery:
-        service-id: config-service
-        enabled: true
+      uri: http://host.docker.internal:8082
+#      discovery:
+#        service-id: config-service
+#        enabled: true
 
 eureka:
   client:
     service-url:
       #      defaultZone: http://${HOST_IP}:8761/eureka
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://host.docker.internal:8761/eureka
     register-with-eureka: true
     fetch-registry: true
   instance:
     leaseRenewalIntervalInSeconds: 10
     health-check-url: http://host.docker.internal:8765/actuator/health
-    hostname: localhost
+    hostname: host.docker.internal
 
