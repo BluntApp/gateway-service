@@ -21,10 +21,18 @@ spring:
         uri: lb://sms-service
         predicates:
         - Path=/api/v1/sms/**
-
+      - id: publish
+        uri: lb://publish-service
+        predicates:
+        - Path=/api/v1/publish/**
+      - id: authorize
+        uri: lb://authorize-service
+        predicates:
+        - Path=/api/v1/authorize/**
     loadbalancer:
       ribbon:
         enabled: false
+
   kafka:
     #bootstrap-servers: http://${HOST_IP}:9092
     bootstrap-servers: http://host.docker.internal:9092
@@ -56,3 +64,4 @@ management:
 logging:
   file:
     path: C:/Users/kpaulpa/Documents/workArea/TechnicalWork/logs/blunt-gateway-service
+
