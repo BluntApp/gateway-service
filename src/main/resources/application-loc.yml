@@ -26,27 +26,29 @@ spring:
         predicates:
         - Path=/api/v1/publish/**
       - id: authorize
-        uri: lb://authorize-service
+        uri: lb://authentication-service
         predicates:
-        - Path=/api/v1/authorize/**
+        - Path=/api/v1/authenticate/**
+      default-filters:
+      - name: AuthenticationFilter
     loadbalancer:
       ribbon:
         enabled: false
 
-  kafka:
-    #bootstrap-servers: http://${HOST_IP}:9092
-    bootstrap-servers: http://host.docker.internal:9092
-  sleuth:
-    messaging:
-      kafka:
-        enabled: true
-    sampler:
-      probability: 1.0
-  zipkin:
-    kafka:
-      topic: blunt-gateway
-    sender:
-      type: kafka
+#  kafka:
+#    #bootstrap-servers: http://${HOST_IP}:9092
+#    bootstrap-servers: http://host.docker.internal:9092
+#  sleuth:
+#    messaging:
+#      kafka:
+#        enabled: true
+#    sampler:
+#      probability: 1.0
+#  zipkin:
+#    kafka:
+#      topic: blunt-gateway
+#    sender:
+#      type: kafka
   boot:
     admin:
       client:
@@ -64,4 +66,6 @@ management:
 logging:
   file:
     path: C:/Users/kpaulpa/Documents/workArea/TechnicalWork/logs/blunt-gateway-service
+
+
 
